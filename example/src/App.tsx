@@ -1,30 +1,43 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-bonum-apple-pay';
+import React from 'react';
+import { SafeAreaView, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { addCardToAppleWallet } from 'react-native-bonum-apple-pay';
 
-export default function App() {
-  const [result, setResult] = useState<number | undefined>();
+const cardDetails = {
+  cardholderName: 'John Doe',
+  primaryAccountSuffix: '1234',
+  // Add other necessary details
+};
 
-  useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+const App: React.FC = () => {
+  const handleAddToWallet = () => {
+    addCardToAppleWallet(cardDetails);
+  };
 
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handleAddToWallet}>
+        <Text style={styles.buttonText}>Add to Apple Wallet</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
   },
 });
+
+export default App;

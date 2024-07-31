@@ -11,23 +11,84 @@ npm install react-native-bonum-apple-pay
 ## Usage
 
 
+Using the correct Apple wallet button, if you are not using the correct way, it will decline it from Apple.
+
+Official site of [Add to Apple Wallet Guidelines](https://developer.apple.com/wallet/add-to-apple-wallet-guidelines/)
+
+
 ```js
-import { multiply } from 'react-native-bonum-apple-pay';
+
+import { CardDetails, NetworkDetails, presentAddPaymentPassViewController } from 'react-native-bonum-apple-pay';
 
 // ...
 
-const result = await multiply(3, 7);
+
+// Info of the Wallet display 
+
+const cardDetails: CardDetails = {
+  cardholderName: 'bonum', // Card holder info to display in wallet dialog
+  primaryAccountSuffix: '1234', // Last 4 digits of the card to display in wallet dialog
+  paymentNetwork: 'masterCard', // Type of card if it is MasterCard  type it masterCard if it is Visa it is just visa
+};
+
+
+// Your Rest Api Request
+
+const networkDetails: NetworkDetails = {
+  url: "",
+  method: '',
+  header: ["Content-Type: application/json", "Authorization: Bearer ${token} "],
+  body: JSON.stringify({
+   // Your body's data
+  }),
+};
+
+
+
+const App: React.FC = () => {
+  
+  const handlePresentWallet = () => {
+    presentAddPaymentPassViewController(cardDetails, networkDetails);
+  };
+
+  // This example is not using add to apple wallet button
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handlePresentWallet}>
+        <Text style={styles.buttonText}>Show Apple Wallet</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
+});
+
+
+
 ```
 
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
 MIT
 
----
+Made by [Bonum The Future of Payment](https://www.bonum.mn/)
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+

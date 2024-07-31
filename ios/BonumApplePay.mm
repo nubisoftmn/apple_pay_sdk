@@ -2,13 +2,6 @@
 
 @interface RCT_EXTERN_MODULE(BonumApplePay, NSObject)
 
-RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
-
-+ (BOOL)requiresMainQueueSetup
-{
-  return NO;
-}
+RCT_EXTERN_METHOD(presentAddPaymentPassViewController:(NSDictionary *)cardDetails networkDetails:(NSDictionary *)networkDetails resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
 @end
